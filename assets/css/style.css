@@ -481,20 +481,16 @@ body {
 
 .file-grid__row {
     display: grid;
-    grid-template-columns: minmax(120px, 1fr) minmax(160px, 1.2fr) minmax(160px, 1.2fr) minmax(100px, 0.9fr) minmax(88px, 0.7fr);
+    grid-template-columns: minmax(100px, 0.9fr) minmax(160px, 1.3fr) minmax(88px, 0.75fr) minmax(120px, 1fr) minmax(120px, 0.85fr);
     gap: 10px;
-    align-items: start;
-}
-
-.file-grid__row--details {
-    grid-template-columns: minmax(100px, 0.9fr) minmax(120px, 1fr) minmax(140px, 1.1fr) minmax(80px, 0.7fr) minmax(70px, 0.6fr) minmax(88px, 0.7fr);
+    align-items: center;
 }
 
 .file-grid__head .file-grid__row {
     align-items: center;
 }
 
-.file-record .file-grid__row:first-child {
+.file-record .file-grid__row {
     align-items: center;
 }
 
@@ -507,7 +503,7 @@ body {
 }
 
 .file-grid__head .file-grid__row + .file-grid__row {
-    margin-top: 6px;
+    margin-top: 0;
 }
 
 .file-record {
@@ -519,16 +515,15 @@ body {
     border-bottom: none;
 }
 
-.file-record .file-grid__row + .file-grid__row {
-    margin-top: 10px;
-}
-
-.file-grid__cell--url-span {
-    grid-column: span 2;
-}
-
 .file-grid__cell--action {
     text-align: right;
+}
+
+.action-cell {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 6px;
 }
 
 .file-grid__cell .url-cell__input {
@@ -674,10 +669,6 @@ body {
         color: var(--muted);
         margin-bottom: 4px;
         font-weight: 600;
-    }
-
-    .file-grid__cell--url-span {
-        grid-column: auto;
     }
 
     .file-grid__cell--action {
