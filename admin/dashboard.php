@@ -88,23 +88,6 @@ require __DIR__ . '/../includes/header.php';
             <p class="empty-state"><?= h(__('admin_no_files')) ?></p>
         <?php else: ?>
             <div class="file-grid">
-                <div class="file-grid__head">
-                    <div class="file-grid__row file-grid__row--labels">
-                        <div class="file-grid__cell"><?= h(__('table_display_name')) ?></div>
-                        <div class="file-grid__cell"><?= h(__('table_url')) ?></div>
-                        <div class="file-grid__cell"><?= h(__('table_password')) ?></div>
-                        <div class="file-grid__cell"><?= h(__('table_expiry_short')) ?></div>
-                        <div class="file-grid__cell file-grid__cell--action"><?= h(__('copy_button')) ?></div>
-                    </div>
-                    <div class="file-grid__row file-grid__row--labels file-grid__row--details">
-                        <div class="file-grid__cell"><?= h(__('table_created')) ?></div>
-                        <div class="file-grid__cell"><?= h(__('table_download')) ?></div>
-                        <div class="file-grid__cell"><?= h(__('table_size')) ?></div>
-                        <div class="file-grid__cell"><?= h(__('table_dl_count')) ?></div>
-                        <div class="file-grid__cell file-grid__cell--action"><?= h(__('delete_button')) ?></div>
-                    </div>
-                </div>
-
                 <?php foreach ($files as $file): ?>
                     <?php
                     $url = download_url($file['download_token']);
