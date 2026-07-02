@@ -94,7 +94,7 @@ return [
     'expiry_unlimited' => 'No expiry',
     'password_unknown' => 'Unknown',
 
-    'copy_distribution_text' => '":name" Distribution URL (Expires: :expiry / Size: :size)\n:url\n\nPassword\n:password',
+    'copy_distribution_text' => "\":name\" Distribution URL (Expires: :expiry / Size: :size)\n:url\n\nPassword\n:password",
 
     'error_invalid_url' => 'The specified URL is invalid.',
     'error_expired' => 'The download period has expired.',
