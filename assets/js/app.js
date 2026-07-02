@@ -1,5 +1,14 @@
 document.addEventListener('DOMContentLoaded', function () {
-    var i18n = window.AppI18n || {};
+    var i18n = {};
+    var i18nElement = document.getElementById('app-i18n-data');
+
+    if (i18nElement) {
+        try {
+            i18n = JSON.parse(i18nElement.textContent || '{}');
+        } catch (error) {
+            i18n = {};
+        }
+    }
 
     var noExpiryCheckbox = document.getElementById('no_expiry');
     var expiresAtInput = document.getElementById('expires_at');
