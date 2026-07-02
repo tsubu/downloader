@@ -14,3 +14,7 @@ Thumbs.db
 .vscode/
 *.swp
 *.swo
+
+# MCP / GitHub push artifacts (temporary)
+.mcp_args_*.json
+.push_*.json
