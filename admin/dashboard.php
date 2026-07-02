@@ -91,24 +91,16 @@ require __DIR__ . '/../includes/header.php';
                 <div class="file-grid__head">
                     <div class="file-grid__row file-grid__row--labels">
                         <div class="file-grid__cell"><?= h(__('table_display_name')) ?></div>
-                        <div class="file-grid__cell file-grid__cell--url-span"><?= h(__('table_url')) ?></div>
+                        <div class="file-grid__cell"><?= h(__('table_url')) ?></div>
                         <div class="file-grid__cell"><?= h(__('table_password')) ?></div>
+                        <div class="file-grid__cell"><?= h(__('table_expiry_short')) ?></div>
                         <div class="file-grid__cell file-grid__cell--action"><?= h(__('copy_button')) ?></div>
-                    </div>
-                    <div class="file-grid__row file-grid__row--labels file-grid__row--details">
-                        <div class="file-grid__cell"><?= h(__('table_created')) ?></div>
-                        <div class="file-grid__cell"><?= h(__('table_expiry')) ?></div>
-                        <div class="file-grid__cell"><?= h(__('table_download')) ?></div>
-                        <div class="file-grid__cell"><?= h(__('table_size')) ?></div>
-                        <div class="file-grid__cell"><?= h(__('table_dl_count')) ?></div>
-                        <div class="file-grid__cell file-grid__cell--action"><?= h(__('delete_button')) ?></div>
                     </div>
                 </div>
 
                 <?php foreach ($files as $file): ?>
                     <?php
                     $url = download_url($file['download_token']);
-                    $adminDownloadUrl = 'file_download.php?id=' . (int) $file['id'];
                     $copyText = build_distribution_copy_text($file, $url);
                     $copyTargetId = 'copy-text-' . (int) $file['id'];
                     ?>
@@ -117,7 +109,7 @@ require __DIR__ . '/../includes/header.php';
                             <div class="file-grid__cell" data-label="<?= h(__('table_display_name')) ?>">
                                 <?= h($file['display_name']) ?>
                             </div>
-                            <div class="file-grid__cell file-grid__cell--url-span" data-label="<?= h(__('table_url')) ?>">
+                            <div class="file-grid__cell" data-label="<?= h(__('table_url')) ?>">
                                 <textarea id="<?= h($copyTargetId) ?>" class="copy-source" hidden readonly><?= h($copyText) ?></textarea>
                                 <input type="text" class="form__input form__input--sm url-cell__input" readonly
                                        value="<?= h($url) ?>">
@@ -129,38 +121,21 @@ require __DIR__ . '/../includes/header.php';
                                     <span class="text-muted"><?= h(__('password_reupload_hint')) ?></span>
                                 <?php endif; ?>
                             </div>
-                            <div class="file-grid__cell file-grid__cell--action" data-label="<?= h(__('copy_button')) ?>">
-                                <button type="button" class="btn btn--ghost btn--sm copy-btn"
-                                        data-copy-target="<?= h($copyTargetId) ?>"><?= h(__('copy_button')) ?></button>
-                            </div>
-                        </div>
-                        <div class="file-grid__row file-grid__row--details">
-                            <div class="file-grid__cell" data-label="<?= h(__('table_created')) ?>">
-                                <?= h($file['created_at']) ?>
-                            </div>
-                            <div class="file-grid__cell" data-label="<?= h(__('table_expiry')) ?>">
+                            <div class="file-grid__cell" data-label="<?= h(__('table_expiry_short')) ?>">
                                 <span class="<?= h(expiry_status_class($file)) ?>"><?= h(format_expiry_date($file['expires_at'] ?? null)) ?></span>
                             </div>
-                            <div class="file-grid__cell" data-label="<?= h(__('table_download')) ?>">
-                                <div class="link-cell link-cell--inline">
-                                    <a href="<?= h($url) ?>" class="link-btn" target="_blank" rel="noopener"><?= h(__('link_distribution_page')) ?></a>
-                                    <a href="<?= h($adminDownloadUrl) ?>" class="link-btn link-btn--admin"><?= h(__('link_file_download')) ?></a>
+                            <div class="file-grid__cell file-grid__cell--action" data-label="<?= h(__('copy_button')) ?>">
+                                <div class="action-cell">
+                                    <button type="button" class="btn btn--ghost btn--sm copy-btn"
+                                            data-copy-target="<?= h($copyTargetId) ?>"><?= h(__('copy_button')) ?></button>
+                                    <form action="delete.php" method="post"
+                                          class="inline-form confirm-delete-form"
+                                          data-confirm="<?= h(__('confirm_delete_file')) ?>">
+                                        <input type="hidden" name="csrf_token" value="<?= h(csrf_token()) ?>">
+                                        <input type="hidden" name="id" value="<?= (int) $file['id'] ?>">
+                                        <button type="submit" class="btn btn--danger btn--sm"><?= h(__('delete_button')) ?></button>
+                                    </form>
                                 </div>
-                            </div>
-                            <div class="file-grid__cell" data-label="<?= h(__('table_size')) ?>">
-                                <?= h(format_bytes((int) $file['file_size'])) ?>
-                            </div>
-                            <div class="file-grid__cell" data-label="<?= h(__('table_dl_count')) ?>">
-                                <?= (int) $file['download_count'] ?>
-                            </div>
-                            <div class="file-grid__cell file-grid__cell--action" data-label="<?= h(__('delete_button')) ?>">
-                                <form action="delete.php" method="post"
-                                      class="inline-form confirm-delete-form"
-                                      data-confirm="<?= h(__('confirm_delete_file')) ?>">
-                                    <input type="hidden" name="csrf_token" value="<?= h(csrf_token()) ?>">
-                                    <input type="hidden" name="id" value="<?= (int) $file['id'] ?>">
-                                    <button type="submit" class="btn btn--danger btn--sm"><?= h(__('delete_button')) ?></button>
-                                </form>
                             </div>
                         </div>
                     </div>
