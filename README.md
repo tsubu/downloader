@@ -1,7 +1,11 @@
 # Downloader
 
+**日本語** | [English](#english)
+
 PHP と SQLite3 だけで動作する、パスワード付きファイル配布システムです。  
 管理画面からファイルをアップロードし、専用 URL とダウンロード用パスワードを配布相手に渡すだけで、安全にファイルを共有できます。
+
+---
 
 ## 主な機能
 
@@ -141,5 +145,159 @@ https://example.com/downloader/setup.php
 [MIT License](LICENSE) の下で公開しています。
 
 ## 作者
+
+[tsubu](https://github.com/tsubu)
+
+---
+
+<a id="english"></a>
+
+# Downloader
+
+[日本語](#downloader) | **English**
+
+A password-protected file distribution system built with PHP and SQLite3 only.  
+Upload files from the admin panel, share a dedicated URL and download password with recipients, and distribute files securely.
+
+---
+
+## Features
+
+- **Password-protected downloads** — Requires a token-based URL plus a 10-character download password
+- **Admin panel** — Upload, list, and delete files; copy distribution URLs and passwords
+- **Expiration dates** — Set a per-file expiry or allow unlimited access
+- **Multiple administrators** — Add, update, and delete admin accounts; per-user display language
+- **Multilingual UI** — Japanese and English (extend by adding files under `lang/`)
+- **Security** — CSRF protection, rate limiting, session timeout, security HTTP headers, path traversal protection
+
+## Supported file types
+
+| Extension | Typical use |
+|-----------|-------------|
+| PDF | Documents, invoices |
+| XLSX / XLS / CSV | Spreadsheets |
+| ZIP | Bundled files |
+| MP4 | Video |
+
+Both MIME type and file extension are validated. Allowed types can be changed in `includes/config.php` via `ALLOWED_EXTENSIONS` and `ALLOWED_MIME_TYPES`.
+
+## Requirements
+
+- PHP 8.0 or later (`declare(strict_types=1)`)
+- SQLite3 (PDO)
+- Apache (`mod_rewrite` and `mod_headers` recommended)
+- Writable `data/` and `storage/` directories
+
+Works on shared hosting, VPS, MAMP, XAMPP, or any environment that runs PHP.
+
+## Directory structure
+
+```
+downloader/
+├── admin/           Admin panel (login, upload, account management)
+├── assets/          CSS / JavaScript
+├── data/            SQLite database (app.db) — not tracked by Git
+├── includes/        Shared PHP (auth, DB, security, i18n)
+├── lang/            Translation files (ja.php, en.php)
+├── storage/         Uploaded files — not tracked by Git
+├── index.php        Download page (password entry)
+├── download.php     Download handler
+└── setup.php        Initial setup (one-time only)
+```
+
+## Installation
+
+### 1. Deploy the files
+
+Place this repository under your web server’s document root.
+
+```bash
+git clone https://github.com/tsubu/downloader.git
+cd downloader
+```
+
+The `data/` and `storage/` directories are created automatically during setup. You may create them beforehand and ensure the web server can write to them.
+
+```bash
+mkdir -p data storage
+chmod 750 data storage
+```
+
+### 2. Web server configuration
+
+With Apache, `.htaccess` enables:
+
+- Blocking direct access to `includes/`
+- Disabling directory listing
+- Security HTTP headers
+
+Upload limits depend on the server’s `upload_max_filesize` and `post_max_size`. You can also set a cap in `includes/config.php` via `SERVER_MAX_UPLOAD_SIZE`.
+
+### 3. Initial setup
+
+Open `setup.php` in a browser and register the first administrator account (email and password).
+
+```
+https://example.com/downloader/setup.php
+```
+
+After setup completes, POST requests to `setup.php` are rejected and you are redirected to the admin panel. Once `data/setup.lock` exists, setup cannot be run again.
+
+## Usage
+
+### Administrator (sender)
+
+1. Log in at `/admin/`
+2. Upload a file on the dashboard (set display name and expiry)
+3. Copy the **distribution URL** and **download password** from the list
+4. Share the URL and password with recipients through separate channels
+
+### Recipient
+
+1. Open the shared URL in a browser
+2. Enter the download password
+3. The file downloads (the display name is used as the filename)
+
+## Security
+
+| Item | Details |
+|------|---------|
+| Admin passwords | Stored with `password_hash()` |
+| Download passwords | Stored in plain text in the DB (for admin display and distribution); hashes are also kept |
+| Login attempts | Locked for 15 minutes after 5 failures (per IP + email) |
+| Download password attempts | Locked for 15 minutes after 5 failures (per IP + token) |
+| Admin session | 30-minute idle timeout |
+| CSRF | Validated on form submissions, logout, and setup |
+| Storage | Random stored filenames + path traversal checks |
+
+**HTTPS is strongly recommended** in production. HSTS headers are sent when HTTPS is used.
+
+## Configuration
+
+Main constants in `includes/config.php`:
+
+| Constant | Description | Default |
+|----------|-------------|---------|
+| `ALLOWED_EXTENSIONS` | Allowed file extensions | pdf, xlsx, xls, csv, zip, mp4 |
+| `TOKEN_LENGTH` | Download URL token length | 32 (hex) |
+| `DOWNLOAD_PASSWORD_LENGTH` | Download password length | 10 |
+| `LOGIN_MAX_ATTEMPTS` | Max login attempts | 5 |
+| `LOGIN_LOCKOUT_SECONDS` | Login lockout duration (seconds) | 900 |
+| `SESSION_IDLE_TIMEOUT` | Session idle timeout (seconds) | 1800 |
+| `SERVER_MAX_UPLOAD_SIZE` | Upload size cap (e.g. `'64M'`) | `'0'` (unset) |
+
+## Adding languages
+
+1. Copy `lang/en.php` to `lang/{locale-code}.php`
+2. Replace the translation values
+3. Select the language in the admin account settings
+
+Supported locales are auto-detected from `lang/*.php`.
+
+## License
+
+Released under the [MIT License](LICENSE).
+
+## Author
 
 [tsubu](https://github.com/tsubu)
