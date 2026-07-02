@@ -7,7 +7,7 @@ declare(strict_types=1);
  */
 return [
     'app_title' => 'ファイル配布',
-    'footer_copyright' => '© :year PICOT. All rights reserved.',
+    'footer_all_rights' => 'All rights reserved.',
     'no_limit' => '制限なし',
 
     'download_title' => 'ファイルダウンロード',
