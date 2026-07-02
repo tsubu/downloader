@@ -94,7 +94,7 @@ return [
     'expiry_unlimited' => '無制限',
     'password_unknown' => '不明',
 
-    'copy_distribution_text' => '「:name」配布URL（DL期限：:expiry）\n:url\n\nパスワード\n:password',
+    'copy_distribution_text' => '「:name」配布URL（DL期限：:expiry / 容量：:size）\n:url\n\nパスワード\n:password',
 
     'error_invalid_url' => '指定されたURLは無効です。',
     'error_expired' => 'ダウンロード期限が過ぎています。',
