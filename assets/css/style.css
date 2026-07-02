@@ -524,7 +524,11 @@ body {
 }
 
 .file-grid__cell--action {
-    text-align: right;
+    text-align: left;
+}
+
+.file-grid .link-cell--inline {
+    justify-content: flex-start;
 }
 
 .file-grid__cell .url-cell__input {
