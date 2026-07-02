@@ -1,0 +1,16 @@
+# Runtime data
+/data/app.db
+/data/setup.lock
+
+# Uploaded files
+/storage/*
+!/storage/.gitkeep
+!/storage/.htaccess
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
