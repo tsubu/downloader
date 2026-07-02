@@ -479,15 +479,13 @@ body {
     border-bottom: 1px solid var(--border);
 }
 
-.file-grid__row {
+.file-grid__row,
+.file-grid__row--details {
     display: grid;
     grid-template-columns: minmax(100px, 0.9fr) minmax(160px, 1.3fr) minmax(88px, 0.75fr) minmax(120px, 1fr) minmax(72px, 0.6fr);
     gap: 10px;
     align-items: center;
-}
-
-.file-grid__row--details {
-    grid-template-columns: minmax(100px, 0.9fr) minmax(160px, 1.3fr) minmax(80px, 0.7fr) minmax(70px, 0.6fr) minmax(88px, 0.7fr);
+    justify-items: start;
 }
 
 .file-grid__head .file-grid__row {
@@ -525,6 +523,13 @@ body {
 
 .file-grid__cell--action {
     text-align: left;
+    justify-self: start;
+}
+
+.file-grid__cell {
+    text-align: left;
+    justify-self: start;
+    width: 100%;
 }
 
 .file-grid .link-cell--inline {
@@ -676,7 +681,9 @@ body {
         font-weight: 600;
     }
 
-    .file-grid__cell--action {
+.file-grid__cell--action {
         text-align: left;
+        justify-self: start;
+        width: auto;
     }
 }
