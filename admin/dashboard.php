@@ -95,8 +95,9 @@ require __DIR__ . '/../includes/header.php';
                         <div class="file-grid__cell"><?= h(__('table_password')) ?></div>
                         <div class="file-grid__cell file-grid__cell--action"><?= h(__('copy_button')) ?></div>
                     </div>
-                    <div class="file-grid__row file-grid__row--labels">
+                    <div class="file-grid__row file-grid__row--labels file-grid__row--details">
                         <div class="file-grid__cell"><?= h(__('table_created')) ?></div>
+                        <div class="file-grid__cell"><?= h(__('table_expiry')) ?></div>
                         <div class="file-grid__cell"><?= h(__('table_download')) ?></div>
                         <div class="file-grid__cell"><?= h(__('table_size')) ?></div>
                         <div class="file-grid__cell"><?= h(__('table_dl_count')) ?></div>
@@ -133,9 +134,12 @@ require __DIR__ . '/../includes/header.php';
                                         data-copy-target="<?= h($copyTargetId) ?>"><?= h(__('copy_button')) ?></button>
                             </div>
                         </div>
-                        <div class="file-grid__row">
+                        <div class="file-grid__row file-grid__row--details">
                             <div class="file-grid__cell" data-label="<?= h(__('table_created')) ?>">
                                 <?= h($file['created_at']) ?>
+                            </div>
+                            <div class="file-grid__cell" data-label="<?= h(__('table_expiry')) ?>">
+                                <span class="<?= h(expiry_status_class($file)) ?>"><?= h(format_expiry_date($file['expires_at'] ?? null)) ?></span>
                             </div>
                             <div class="file-grid__cell" data-label="<?= h(__('table_download')) ?>">
                                 <div class="link-cell link-cell--inline">
