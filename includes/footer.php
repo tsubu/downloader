@@ -1,7 +1,7 @@
     <footer class="site-footer">
         <p class="site-footer__copy">
             © <?= h((string) date('Y')) ?>
-            <a class="site-footer__link" href="https://github.com/tsubu/downloader" target="_blank" rel="noopener noreferrer">GitHub</a>. <?= h(__('footer_all_rights')) ?>
+            <a class="site-footer__link" href="https://github.com/tsubu/downloader" target="_blank" rel="noopener noreferrer">PICOT</a>. <?= h(__('footer_all_rights')) ?>
         </p>
     </footer>
 </div>
